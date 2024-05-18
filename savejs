@@ -1,6 +1,15 @@
-# https://tea.xyz/what-is-this-file
----
-version: 1.0.0
-codeOwners:
-  - '0x88D1c2383E40A7938005a3D9e7448F7A996e0216'
-quorum: 12
+#include<stdio.h>
+
+int Calculate_Square (int Number);
+
+int main() 
+    int number, Square;
+    printf(" \n Please enter a number: ");
+    scanf ("%d", &number);
+    Square = Calculate_Square (number);
+    printf("The square of %d is %d.", number, Square);
+    return 0;
+}
+int Calculate_Square(int Number) {
+    return Number * Number;
+}
