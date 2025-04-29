@@ -1,14 +1,19 @@
-#include<stdio.h>
+package main
 
-int Calculate_Square (int Number);
-int main () {
-int number, Square;
-printf(" \n Please enter a number: ");
-scanf ("&d", &number);
-Square = Calculate_Square (number);
-printf("The square of &d is %d.", number, Square);
-return 0;
+import (
+	"fmt"
+)
+
+type Point struct {
+	X int
+	Y int
 }
-int Calculate_Square(int Number) {
-return Number * Number;
+
+func main() {
+	pointMap := map[string]int{
+		"x" : 123, //продублировали имя полей в виде строки 
+		"y" : 456,
+	}
+	//наша задача это преобразовать наш МАР в структуру 
+
 }
