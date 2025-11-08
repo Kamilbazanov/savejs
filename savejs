@@ -1,15 +1,25 @@
-#include<stdio.h>
+CREATE TABLE IF NOT EXISTS customers (
+                             id           BIGSERIAL PRIMARY KEY,
+                             name         TEXT        NOT NULL CHECK (length(btrim(name)) BETWEEN 2 AND 100),
+                             phone        TEXT        NOT NULL,                          -- +31..., +7..., и т.п.
+                             email        TEXT,                                          -- опционально
+                             tg_handle    TEXT,                                          -- @username
+                             notes        TEXT,                                          -- комментарии администратора
+                             created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 
-int Calculate_Square (int Number);
+-- Уникальные ограничения (частичные — только если поле заполнено)
+CREATE UNIQUE INDEX IF NOT EXISTS uq_customers_phone
+    ON customers (phone);
 
-int main() 
-    int number, Square;
-    printf(" \n Please enter a number: ");
-    scanf ("%d", &number);
-    Square = Calculate_Square (number);
-    printf("The square of %d is %d.", number, Square);
-    return 0;
-}
-int Calculate_Square(int Number) {
-    return Number * Number;
-}
+CREATE UNIQUE INDEX IF NOT EXISTS uq_customers_email
+    ON customers (lower(email))
+    WHERE email IS NOT NULL;
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_customers_tg_handle
+    ON customers (lower(tg_handle))
+    WHERE tg_handle IS NOT NULL;
+
+-- Ускорение поиска по имени/телефону (простые btree индексы)
+CREATE INDEX IF NOT EXISTS idx_customers_name
+    ON customers (lower(name));
